@@ -78,6 +78,9 @@ class Flight {
     public int getAvailableSeats() {
         return availableSeats;
     }
+	public int getTotalSeats(){
+		return totalSeats;
+	}
 
     public List<Passenger> getPassengers() {
         return passengers;
@@ -142,14 +145,10 @@ public class AirlineReservationSystem {
     public static void main(String[] args) {
         ReservationSystem system = new ReservationSystem();
 
-        // Adding some sample flights
-        Flight flight1 = new Flight("F001", "New York", "Los Angeles", 50);
-        Flight flight2 = new Flight("F002", "Chicago", "Miami", 40);
-        Flight flight3 = new Flight("F003", "San Francisco", "Seattle", 30);
-
-        system.addFlight(flight1);
-        system.addFlight(flight2);
-        system.addFlight(flight3);
+        // Add sample flights once (they persist in DB because of INSERT OR IGNORE)
+        system.addFlight(new Flight("F001", "New York", "Los Angeles", 50));
+        system.addFlight(new Flight("F002", "Chicago", "Miami", 40));
+        system.addFlight(new Flight("F003", "San Francisco", "Seattle", 30));
 
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
@@ -181,6 +180,7 @@ public class AirlineReservationSystem {
                         System.out.println("Booking failed. No available seats.");
                     }
                     break;
+
                 case 2:
                     System.out.println("Enter Flight Number:");
                     flightNumber = scanner.nextLine();
@@ -196,18 +196,22 @@ public class AirlineReservationSystem {
                         System.out.println("Cancellation failed. Passenger not found or flight not found.");
                     }
                     break;
+
                 case 3:
                     system.displayFlights();
                     break;
+
                 case 4:
                     System.out.println("Enter Flight Number:");
                     flightNumber = scanner.nextLine();
                     system.displayPassengers(flightNumber);
                     break;
+
                 case 5:
                     running = false;
                     System.out.println("Exiting...");
                     break;
+
                 default:
                     System.out.println("Invalid choice. Please enter a number between 1 and 5.");
             }
@@ -217,3 +221,4 @@ public class AirlineReservationSystem {
         scanner.close();
     }
 }
+
